@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <!--loaded botstrap for styling-->
+    <!--refresh.js is the js code to refresh the api after every 30 minutes-->
+    <!--have used jinja throughout-->
+
+    <title>Weather Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="{% static 'refresh.js' %}"></script>   
+  </head>
+  <body>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <nav class="navbar navbar-dark bg-primary">
+        <a class="navbar-brand">Weather Report</a>
+        {% if user.is_authenticated %}
+          <p>Logged in as - {{ user.username }}</p>
+          <a href="{% url 'logout' %}">
+            <button class="btn btn-dark" type="submit">Logout</button>
+          </a>
+        {% else %}
+          <a href="{% url 'login' %}">
+            <button class="btn btn-success" type="submit">Login</button>
+          </a>
+          <a href="{% url 'register' %}">
+            <button class="btn btn-danger" type="submit">Register</button>
+          </a>
+        {% endif %}
+        <form class="form-inline" method="POST">{%csrf_token%}
+          <input class="form-control mr-sm-2" type="text" placeholder="Enter Any City" aria-label="Search" name = 'city'>
+          <button class="btn btn-dark" type="submit">Search for weather</button>
+        </form>
+    </nav>
+    
+    <!--looping through the data and printing on the webpage-->
+    {% for data in all_tasks %}
+    <br>
+        
+        <p>{{data}}</p>
+        
+    {%endfor%}
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-end">
+        <li class="page-item"><a class="page-link" href="#"><<</a></li>      
+        {% if all_tasks.has_previous %}
+          <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.previous_page_number }}">{{ all_tasks.previous_page_number }}</a></li>
+        {% endif %}
+
+        <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.number }}">{{ all_tasks.number }}</a></li>
+        
+        {% if all_tasks.has_next %}
+          <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.next_page_number }}">{{ all_tasks.next_page_number }}</a></li>
+        {% endif %}
+        <li class="page-item"><a class="page-link" href="?pg={{ all_tasks.paginator.num_pages }}">>></a></li>
+    
+      </ul>
+    </nav>
+    
+    
+  </body>
+</html>
+

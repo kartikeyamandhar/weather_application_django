@@ -1,0 +1,1 @@
+window.setTimeout(function () { location.href = ""; },1800000);
