@@ -106,7 +106,7 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRIPSY_TEMPLATE_PACK = 'bootstrap4'
-LOGIN_REDIRECT_URL = "/app/"
+LOGIN_REDIRECT_URL = ""
 LOGIN_URL = '/account/login'
 
 django_heroku.settings(locals())
