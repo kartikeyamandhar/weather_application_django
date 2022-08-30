@@ -1,4 +1,4 @@
-
+import django_heroku
 import os
 from pathlib import Path
 import environ
@@ -108,3 +108,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRIPSY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/app/"
 LOGIN_URL = '/account/login'
+
+django_heroku.settings(locals())
